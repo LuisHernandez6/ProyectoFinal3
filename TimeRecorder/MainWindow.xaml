@@ -1,0 +1,56 @@
+﻿<Window x:Class="MonitorActividad.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MonitorActividad"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="Ventana Principal" Height="527" Width="1080"
+        SizeToContent="Manual">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Top section for label & buttons -->
+            <RowDefinition Height="*"/>
+            <!-- Remaining space for chart -->
+        </Grid.RowDefinitions>
+
+        <!-- Centered Month Navigation -->
+        <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="btnPreviousMonth" Content="←" Width="30" Grid.Column="0" Click="BtnPreviousMonth_Click"/>
+            <Label x:Name="lblCurrentMonthYear" Content="abril, 2025" FontSize="16" Grid.Column="1" HorizontalAlignment="Center" Margin="10,0"/>
+            <Button x:Name="btnNextMonth" Content="→" Width="30" Grid.Column="2" Click="BtnNextMonth_Click"/>
+        </Grid>
+
+        <lvc:CartesianChart Name="chartActividad" LegendLocation="Bottom" Margin="30,46,30,59">
+            <lvc:CartesianChart.Series>
+                <lvc:StackedColumnSeries Title="Productivo" Values="{Binding Productivo}" Fill="Green"/>
+                <lvc:StackedColumnSeries Title="Neutral" Values="{Binding Neutral}" Fill="Blue"/>
+                <lvc:StackedColumnSeries Title="Inactivo" Values="{Binding TiempoIdle}" Fill="Orange"/>
+                <lvc:StackedColumnSeries Title="No Productivo" Values="{Binding NoProductivo}" Fill="Red"/>
+                <lvc:StackedColumnSeries Title="No Categorizado" Values="{Binding NoCategorizado}" Fill="Gray"/>
+            </lvc:CartesianChart.Series>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Días del Mes" Labels="{Binding Dias}"/>
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Horas"/>
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
+        <Button x:Name="button" Content="Cerrar sesion" HorizontalAlignment="Right" Height="26" Margin="0,448,22,0" VerticalAlignment="Top" Width="88" Click="button_Click"/>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Right" Margin="0,12,22,0" VerticalAlignment="Top" Width="198" ItemsSource="{Binding Items}" SelectionChanged="comboBox_SelectionChanged"/>
+        <Button x:Name="button_Copy" Content="Eliminar" HorizontalAlignment="Right" Height="26" Margin="0,448,132,0" VerticalAlignment="Top" Width="88" Click="buttonEliminar_Click"/>
+        <Button x:Name="button_Copy1" Content="Modificar" HorizontalAlignment="Right" Height="26" Margin="0,448,242,0" VerticalAlignment="Top" Width="88" Click="buttonModificar_Click"/>
+        <Button x:Name="button_Copy2" Content="Crear usuario" HorizontalAlignment="Right" Height="26" Margin="0,448,352,0" VerticalAlignment="Top" Width="88" Click="buttonNuevo_Click"/>
+        <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Height="67" Margin="58,5,0,0" VerticalAlignment="Top" Width="352" FontWeight="Bold" FontSize="19"/>
+        <Button x:Name="buttonActividad" Content="Administrar Perfiles" HorizontalAlignment="Right" Height="26" Margin="0,448,791,0" VerticalAlignment="Top" Width="133" Click="buttonActividad_Click"/>
+        <Label x:Name="label_Copy" Content=" " HorizontalAlignment="Right" Height="22" Margin="0,449,925,0" VerticalAlignment="Top" Width="43"/>
+    </Grid>
+</Window>

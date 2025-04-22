@@ -1,0 +1,100 @@
+﻿<Window x:Class="MonitorActividad.ProcesosWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Administrador de Perfiles" Height="400" Width="979" Closing="Window_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Profile Selection Area -->
+            <RowDefinition Height="*"/>
+            <!-- Main Content Area -->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <!-- Process Lists -->
+            <ColumnDefinition Width="1*" />
+            <!-- Profile Name Section -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Profile Selection -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
+            <Label Content="Perfil:" VerticalAlignment="Center"/>
+            <ComboBox Name="ProfileComboBox" Width="150" ItemsSource="{Binding Items}" SelectionChanged="ProfileComboBox_SelectionChanged"/>
+            <Button Content="Crear" Width="75" Click="CreateProfile_Click"/>
+            <Button Content="Copiar" Width="75" Click="CopiarProfile_Click"/>
+            <Button Content="Eliminar" Width="75" Click="DeleteProfile_Click"/>
+        </StackPanel>
+
+        <!-- Process Management Section -->
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left ListBox (Running Processes) -->
+            <ListBox Name="LeftListBox">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="24" Height="24" Source="{Binding Icon}"/>
+                            <TextBlock Text="{Binding Name}" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel Grid.Column="1">
+                <Button Content="Añadir ➜" Click="AddProcess_Click"/>
+                <Button Content="⬅ Remover" Click="RemoveProcess_Click"/>
+            </StackPanel>
+
+            <!-- Right ListBox (Selected Processes) -->
+            <ListBox Name="RightListBox" Grid.Column="2" SelectionChanged="RightListBox_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="24" Height="24" Source="{Binding Icon}"/>
+                            <TextBlock Text="{Binding Name}" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <!-- Profile Name & Schedule Section -->
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
+            <Label Content="Nombre del perfil:"/>
+            <TextBox Name="ProfileNameTextBox" Width="200" LostFocus="ProfileData_LostFocus"/>
+            <Label Content="Horario (24 horas):" Margin="0,10,0,0"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Name="StartTimeTextBox" Width="50" Height="20" LostFocus="ProfileData_LostFocus"/>
+                <Label Content="hasta" VerticalAlignment="Center" Margin="2,0,2,0"/>
+                <TextBox Name="EndTimeTextBox" Width="50" Height="20" LostFocus="ProfileData_LostFocus"/>
+            </StackPanel>
+
+            <!-- Productivity Mode Section -->
+            <StackPanel Margin="0,10,0,0">
+                <Label Content="Categoria:"/>
+                <ComboBox Name="ModeComboBox" Width="200" SelectionChanged="ModeComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Productivo"/>
+                    <ComboBoxItem Content="Neutral"/>
+                    <ComboBoxItem Content="No Productivo"/>
+                </ComboBox>
+                <Label Content="Tiempo antes de ser considerado:" Margin="10,10,0,0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Movable Section -->
+        <Canvas Grid.Row="1" Grid.Column="1" Margin="10,10,10,10">
+            <!-- Neutral Label and TextBox -->
+            <Label Content="Neutral:" Canvas.Top="206" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="7"/>
+            <TextBox Name="NeutralTimeTextBox" Width="80" Canvas.Left="65" Canvas.Top="211" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+            <!-- Inactivo Label and TextBox -->
+            <Label Content="Inactivo:" Canvas.Top="234" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="7"/>
+            <TextBox Name="InactiveTimeTextBox" Width="80" Canvas.Left="65" Canvas.Top="240" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </Canvas>
+    </Grid>
+</Window>
